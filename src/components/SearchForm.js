@@ -1,37 +1,45 @@
-import React, { useEffect } from 'react'
-import { useGlobalContext } from '../context'
+import { useGlobalContext } from "../context";
+import React, { useCallback, useState } from "react";
 
 const SearchForm = () => {
-  const { setSearchterm } = useGlobalContext();
-  const searchValue = React.useRef(null);
+	const [inputValue, setInputValue] = useState("");
+	const { setSearchterm } = useGlobalContext();
 
-console.log(searchValue);
-  const handleSearch = () => {
-    setSearchterm(searchValue.current.value);
-  }
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  }
-  useEffect(() => {
-    searchValue.current.focus()
-  }, []);
+	const handleSearch = useCallback(
+		(e) => {
+			setInputValue(e.target.value);
+			setSearchterm(e.target.value); // debouncing is handled inside context
+		},
+		[setSearchterm],
+	);
 
-  return (
-    <div className='section search'>
-      <form className="search-form " onSubmit={handleSubmit}>
-        <div className="form-control">
-        <label htmlFor='search'>Search your Favourite Cocktail</label>
-        <input
-          type='text'
-          name='search'
-          ref={searchValue}
-          onChange={handleSearch}
-        ></input>
+	const handleSubmit = useCallback((e) => {
+		e.preventDefault();
+	}, []);
 
-        </div>
-      </form>
-    </div>
-  )
-}
+	const inputRef = useCallback((node) => {
+		if (node) node.focus();
+	}, []);
 
-export default SearchForm
+	return (
+		<div className='section search'>
+			<form className='search-form ' onSubmit={handleSubmit} role='search'>
+				<div className='form-control'>
+					<label htmlFor='search'>Search your Favourite Cocktail</label>
+					<input
+						id='search'
+						type='text'
+						name='search'
+						ref={inputRef}
+						onChange={handleSearch}
+						value={inputValue}
+						placeholder='e.g. Margarita'
+						aria-label='Search for a cocktail'
+					/>
+				</div>
+			</form>
+		</div>
+	);
+};
+
+export default SearchForm;

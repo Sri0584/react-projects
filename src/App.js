@@ -1,40 +1,46 @@
-import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { lazy } from "react";
 // import pages
-import Home from './pages/Home'
-import About from './pages/About'
-import SingleCocktail from './pages/SingleCocktail'
-import Error from './pages/Error'
+import Home from "./pages/Home";
 // import components
-import Navbar from './components/Navbar'
+import Navbar from "./components/Navbar";
+import { Suspense } from "react";
+import Loading from "./components/Loading";
+const SingleCocktail = lazy(() => import("./pages/SingleCocktail"));
+const About = lazy(() => import("./pages/About"));
+const Error = lazy(() => import("./pages/Error"));
+
+const ReactRouterSetup = () => {
+	return (
+		<Router>
+			<Navbar />
+			<Suspense fallback={<Loading />}>
+				<Switch>
+					<Route exact path='/'>
+						<Home />
+					</Route>
+					<Route path='/about'>
+						<About />
+					</Route>
+					<Route path='/cocktail/:id'>
+						<SingleCocktail />
+					</Route>
+					<Route path='*'>
+						<Error />
+					</Route>
+				</Switch>
+			</Suspense>
+		</Router>
+	);
+};
+
 function App() {
-  const ReactRouterSetup = () => {
-    return (
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route exact path='/'>
-            <Home/>
-          </Route>
-          <Route path='/about'>
-            <About/>
-          </Route>
-          <Route
-            path='/cocktail/:id'>
-           <SingleCocktail />
-          </Route>
-          <Route path='*'>
-            <Error/>
-          </Route>
-        </Switch>
-      </Router>
-    )
-  }
-  return (
-    <div>
-      <ReactRouterSetup/>
-    </div>
-  )
+	return (
+		<div>
+			<ReactRouterSetup />
+		</div>
+	);
 }
 
-export default App
+export default App;
