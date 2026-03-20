@@ -17,10 +17,6 @@ const SearchForm = () => {
 		e.preventDefault();
 	}, []);
 
-	const inputRef = useCallback((node) => {
-		if (node) node.focus();
-	}, []);
-
 	return (
 		<div className='section search'>
 			<form className='search-form ' onSubmit={handleSubmit} role='search'>
@@ -28,9 +24,9 @@ const SearchForm = () => {
 					<label htmlFor='search'>Search your Favourite Cocktail</label>
 					<input
 						id='search'
-						type='text'
+						type='search'
 						name='search'
-						ref={inputRef}
+						autoFocus
 						onChange={handleSearch}
 						value={inputValue}
 						placeholder='e.g. Margarita'

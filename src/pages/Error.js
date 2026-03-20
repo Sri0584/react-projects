@@ -7,8 +7,8 @@ const Error = () => {
 			<div className='error-container'>
 				<h2>404 - Page not found</h2>
 				<p>The page you're looking for doesn't exist or has been moved.</p>
-				<Link to='/' className='btn btn-primary' aria-label='Go to homepage'>
-					Go to homepage
+				<Link to='/' className='btn btn-primary' aria-label='Go to home page'>
+					Go to home page
 				</Link>
 			</div>
 		</main>

@@ -72,12 +72,12 @@ export default function SingleCocktail() {
 
 	if (error) {
 		return (
-			<h2 className='section-title'>
-				{error}
-				<Link to='/' className='btn btn-primary'>
+			<div className='section-title' role='alert' aria-live='assertive'>
+				<p>{error}</p>
+				<Link to='/' className='btn btn-primary' aria-label='Go to home page'>
 					Return to home and try again
 				</Link>
-			</h2>
+			</div>
 		);
 	}
 

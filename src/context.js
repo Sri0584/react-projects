@@ -66,9 +66,8 @@ const AppProvider = ({ children }) => {
 		} catch (error) {
 			setLoading(false);
 			if (error.name !== "AbortError") {
-				throw new Error(error);
+				setError("Failed to load cocktails. Please try again.");
 			}
-			setError("Failed to load cocktails. Please try again.");
 		}
 		return () => controller.abort();
 	}, [searchterm]);
